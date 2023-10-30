@@ -5,6 +5,7 @@ const { createChat } = require("completions");
 require("dotenv").config();
 const app = express();
 const apiKey = process.env.OPENAI_API_KEY;
+const key = process.env.KEY;
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
@@ -30,7 +31,7 @@ const chat = createChat({
       },
       function: async ({ location }) => {
         let res_single = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${"3a2e0218f70357fb0958d65dd9ea9d7c"}&units=metric&sys=unix`
+          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric&sys=unix`
         );
         let data = await res_single.json();
         return {
