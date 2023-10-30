@@ -15,9 +15,12 @@ const ChatBot = () => {
 
     // Send the user's message to the server
     try {
-      const response = await axios.post("http://localhost:8080/bot", {
-        userMessage,
-      });
+      const response = await axios.post(
+        "https://helpful-eel-sari.cyclic.app/bot",
+        {
+          userMessage,
+        }
+      );
       const botResponse = response.data.result;
 
       // Store both the question and the answer in chat history
