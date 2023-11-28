@@ -8,6 +8,7 @@ import {
   Text,
   Center,
   Spinner,
+  Heading,
 } from "@chakra-ui/react";
 
 const ChatBot = () => {
@@ -49,15 +50,37 @@ const ChatBot = () => {
 
   return (
     <VStack spacing={4} width="800px" margin={"auto"} marginTop={"100px"}>
+      <Heading>Welcome to Chat-Bot </Heading>
+      <Text>You Can Asked Anything to me.</Text>
       <Box
         border="1px solid #ccc"
         p={4}
         borderRadius="md"
-        backgroundColor={"blue.300"}
+        boxShadow="10px 10px lightblue"
+        bgGradient="linear(to-r, white.200, white.500)"
+        textAlign="center"
+        // backgroundColor={"blue.300"}
       >
-        <Text fontSize="lg" fontWeight="bold">
+        <Text fontSize="lg" fontWeight="bold" marginBottom={"20px"}>
           ChatBot
         </Text>
+
+        {chatHistory.map((message, index) => (
+          <Box key={index}>
+            <Text
+              fontWeight={message.role === "bot" ? "bold" : "normal"}
+              marginBottom={"10px"}
+            >
+              {message.role === "user" ? "You: " : "Response: "}
+              {message.text}
+            </Text>
+          </Box>
+        ))}
+        <Input
+          placeholder="Enter your message..."
+          value={userMessage}
+          onChange={handleUserMessageChange}
+        />
         {loading ? (
           <Spinner
             thickness="4px"
@@ -67,27 +90,10 @@ const ChatBot = () => {
             size="xl"
           />
         ) : (
-          <div>hii</div>
+          <Button colorScheme="teal" onClick={handleSubmit} marginTop={"20px"}>
+            Send
+          </Button>
         )}
-        {chatHistory.map((message, index) => (
-          <div key={index}>
-            <Text
-              fontWeight={message.role === "bot" ? "bold" : "normal"}
-              marginBottom={"10px"}
-            >
-              {message.role === "user" ? "You: " : "Response: "}
-              {message.text}
-            </Text>
-          </div>
-        ))}
-        <Input
-          placeholder="Enter your message..."
-          value={userMessage}
-          onChange={handleUserMessageChange}
-        />
-        <Button colorScheme="teal" onClick={handleSubmit}>
-          Send
-        </Button>
       </Box>
     </VStack>
   );
