@@ -51,7 +51,7 @@ const ChatBot = () => {
   return (
     <VStack spacing={4} width="800px" margin={"auto"} marginTop={"100px"}>
       <Heading>Welcome to Chat-Bot </Heading>
-      <Text>You Can Asked Anything to me.</Text>
+      <Text>You Can Ask Anything to me.</Text>
       <Box
         border="1px solid #ccc"
         p={4}
