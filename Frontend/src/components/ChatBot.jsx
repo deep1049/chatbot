@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Box, Input, Button, VStack, Text, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  Button,
+  VStack,
+  Text,
+  Center,
+  Spinner,
+} from "@chakra-ui/react";
 
 const ChatBot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+  const [loading, isLoading] = useState(false);
 
   const handleUserMessageChange = (e) => {
     setUserMessage(e.target.value);
@@ -15,6 +24,7 @@ const ChatBot = () => {
 
     // Send the user's message to the server
     try {
+      isLoading(true);
       const response = await axios.post(
         "https://helpful-eel-sari.cyclic.app/bot",
         {
@@ -22,7 +32,7 @@ const ChatBot = () => {
         }
       );
       const botResponse = response.data.result;
-
+      isLoading(false);
       // Store both the question and the answer in chat history
       setChatHistory([
         ...chatHistory,
@@ -33,6 +43,7 @@ const ChatBot = () => {
       setUserMessage("");
     } catch (error) {
       console.error(error);
+      isLoading(false);
     }
   };
 
@@ -47,6 +58,17 @@ const ChatBot = () => {
         <Text fontSize="lg" fontWeight="bold">
           ChatBot
         </Text>
+        {loading ? (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        ) : (
+          <div>hii</div>
+        )}
         {chatHistory.map((message, index) => (
           <div key={index}>
             <Text
